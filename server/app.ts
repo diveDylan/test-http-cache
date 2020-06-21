@@ -1,20 +1,33 @@
 
 import { Drash } from "https://deno.land/x/drash@v1.0.6/mod.ts";
+interface RESBody {
+  code: String,
+  data: Object | null,
+  message: String
+}
 
 class HomeResource extends Drash.Http.Resource {
-  static paths = ["/"];
+  static paths = ["/index"];
   public GET() {
-    this.request.cacheControl = 'max-age: 30000'
-    this.response.body = "Hello World! deno + Drash is cool!";
+    this.response.body = this.response.render(
+      "/index.html",
+      {
+        user: {
+          name: "Edward"
+        }
+      }
+    );
     return this.response;
   }
 }
 
 const server = new Drash.Http.Server({
-  directory: "/Users/zengxiangda/Projects/learn/test-http-cache/server",
-  // resources: [HomeResource],
+  resources: [
+    HomeResource
+  ],
   response_output: "text/html",
-  static_paths: ["/public"]
+  template_engine: true,
+  views_path: "./public",
 });
 
 server.run({
