@@ -21,11 +21,30 @@ class HomeResource extends Drash.Http.Resource {
   }
 }
 
+class UserResource extends Drash.Http.Resource {
+  static paths = ["/user"]
+  public GET() {
+    this.response.setCookie({
+      name: "MINI",
+      value: "Cooper",
+    });
+    this.response.body = JSON.stringify({
+      code: '000000',
+      data: {
+        name: 'dylan'
+      },
+      message: 'success'
+    })
+    return this.response
+  }
+}
+
 const server = new Drash.Http.Server({
   resources: [
-    HomeResource
+    HomeResource,
+    UserResource
   ],
-  response_output: "text/html",
+  response_output: "text/html; application/json",
   template_engine: true,
   views_path: "./public",
 });

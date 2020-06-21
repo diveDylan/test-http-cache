@@ -7,5 +7,12 @@
 </head>
 <body>
   <div><% user.name %></div>
+  <script>
+    fetch('http://localhost:1447/user', {
+      contentType: 'application/json'
+    }).then(res => {
+      console.log('res', res)
+    })
+  </script>
 </body>
 </html>
