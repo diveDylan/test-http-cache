@@ -21,20 +21,17 @@ class HomeResource extends Drash.Http.Resource {
   }
 }
 
+
 class UserResource extends Drash.Http.Resource {
-  static paths = ["/user"]
+  static paths = ["/test"]
   public GET() {
-    this.response.setCookie({
-      name: "MINI",
-      value: "Cooper",
-    });
-    this.response.body = JSON.stringify({
-      code: '000000',
-      data: {
-        name: 'dylan'
-      },
-      message: 'success'
-    })
+    this.response.headers.set('cache-control', 'no-cache')
+    if(this.request.getHeaderParam('if-none-match') == "33a64df551425fcc55e4d42a148795d9f25f89d4"){
+      this.response.status_code = 304
+    } else {
+      this.response.headers.set('ETag', "33a64df551425fcc55e4d42a148795d9f25f89d4")
+    }
+    console.log(this.response)
     return this.response
   }
 }

@@ -8,11 +8,19 @@
 <body>
   <div><% user.name %></div>
   <script>
-    fetch('http://localhost:1447/user', {
-      contentType: 'application/json'
-    }).then(res => {
-      console.log('res', res)
-    })
+    let a = 7;
+    function getUser() {
+      console.log(window);
+      fetch('http://localhost:1447/test').then(res => {
+        console.log('res', res)
+      })
+    }
+    getUser();
+    var timer = setTimeout(() => {
+      getUser();
+   
+      clearTimeout(timer);
+    }, 1000)
   </script>
 </body>
 </html>
